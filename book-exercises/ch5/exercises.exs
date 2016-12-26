@@ -1,3 +1,4 @@
+# Functions-2
 fizzBuzz = fn
   0, 0, _ -> IO.puts("FizzBuzz")
   0, _, _ -> IO.puts("Fizz")
@@ -5,6 +6,7 @@ fizzBuzz = fn
   _, _, arg3 -> IO.puts(arg3)
 end
 
+# Functions-3
 doFizzBuzz = fn(n) ->
   fizzBuzz.(rem(n, 3), rem(n, 5), n)
 end
@@ -17,6 +19,7 @@ doFizzBuzz.(14)
 doFizzBuzz.(15)
 doFizzBuzz.(16)
 
+# Functions-4
 prefix = fn(prefix) ->
    fn(suffix) ->
      "#{prefix} #{suffix}"
@@ -27,6 +30,6 @@ prefix = fn(prefix) ->
  IO.puts(mrs.("Smith"))
  IO.puts(prefix.("Elixir").("Rocks"))
 
-
+# Functions-5
  Enum.map([1, 2, 3, 4], &(&1 + 2))
  Enum.map([1, 2, 3, 4], &(IO.inspect(&1)))

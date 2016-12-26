@@ -24,8 +24,15 @@ defmodule Exercises do
   end
 
   # ListsAndRecursion-2
+  def max(list = [ head | _ ]), do: do_max(list, head)
+
+  defp do_max([], curr_max), do: curr_max
+  defp do_max([ head | tail ], curr_max) when head > curr_max, do: do_max(tail, head)
+  defp do_max([ _ | tail ], curr_max), do: do_max(tail, curr_max)
+
+  # ListsAndRecursion-3
   #
-  # Exercises.caesar('ryvkve', 13) # =>
+  # Exercises.caesar('ryvkve', 13) # => 'elixir'
   def caesar(list, key) do
     do_caesar(list, key, [])
   end
@@ -43,4 +50,8 @@ defmodule Exercises do
   defp encrypt_char(char, key) do
     char + key
   end
+
+  # ListsAndRecursion-4
+  def span(from, to) when from > to, do: []
+  def span(from, to), do: [ from | span(from + 1, to) ]
 end

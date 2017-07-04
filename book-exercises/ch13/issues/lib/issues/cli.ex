@@ -43,10 +43,11 @@ defmodule Issues.CLI do
     def process({user, project, count}) do
         Issues.GithubIssues.fetch(user, project)
         |> decode_response
-        |> convert_to_list_of_hashdicts
-        # sort
-        # take (honestly this might need to go on the fetch...)
-        # format
+        |> convert_to_list_of_maps
+        |> sort_ascending_by_created_at
+        |> Enum.take(count)
+        #|> print_table
+        |> print_table_for_columns(["created_at", "number", "title"])
     end
 
     def decode_response({:ok, body}) do
@@ -59,8 +60,59 @@ defmodule Issues.CLI do
         System.halt(2)
     end
 
-    def convert_to_list_of_hashdicts(list) do
+    def convert_to_list_of_maps(list) do
         list
-        |> Enum.map(&Enum.into(&1, HashDict.new))
+        |> Enum.map(&Enum.into(&1, Map.new))
+    end
+
+    def sort_ascending_by_created_at(list_of_issues) do
+        Enum.sort(list_of_issues, &(&1["created_at"] <= &2["created_at"]))
+    end
+
+    # def print_table(issues) do
+    #     IO.puts " # | created_at | title "
+    #     IO.puts "---+------------+-------"
+    #     display_in_table(issues)
+    # end
+
+    # def display_in_table([head|tail]) do
+    #     IO.puts "#{head["number"]} | #{head["created_at"]} | #{head["title"]}"
+    #     display_in_table(tail)
+    # end
+
+    # def display_in_table([]) do
+    #     []
+    # end
+
+
+    def print_table_for_columns(issues, headers) do
+        # put data into lists of their columns [[1, 2, 3], ["title1", "title2", "title3"], ...]
+        data_by_columns = data_by_columns(issues, headers)
+        widths = widths_of(data_by_columns)
+        widths
+    end
+
+    def data_by_columns(rows, headers) do
+        for header <- headers do
+            for row <- rows do
+                printable(row[header])
+            end
+        end
+    end
+
+    def printable(str) when is_binary(str) do
+        str
+    end
+    
+    def printable(str) do
+        to_string(str)
+    end
+
+    def widths_of(columns) do
+        for column <- columns do
+            column
+            |> Enum.map(&String.length/1)
+            |> Enum.max
+        end
     end
 end

@@ -1,8 +1,15 @@
 defmodule Issues.GithubIssues do
+    require Logger
+
     @user_agent [{"User-agent", "Issue parser"}]
     @github_url Application.get_env(:issues, :github_url)
 
+    @doc """
+    Given a string for a GitHub user and a string for a GitHub project
+    the issues for that project are fetched and the response is decoded.
+    """
     def fetch(user, project) do
+        Logger.info("Fetching user #{user}'s project #{project}")
         issues_url(user, project)
         |> HTTPoison.get(@user_agent)
         |> handle_response
@@ -13,9 +20,13 @@ defmodule Issues.GithubIssues do
     end
     
     defp handle_response({:ok, %{status_code: 200, body: body}}) do
+        Logger.info("Successful response")
+        Logger.debug(fn -> inspect(body) end)
         {:ok, :jsx.decode(body)}
     end
-    defp handle_response({:ok, %{status_code: _, body: body}}) do
+
+    defp handle_response({:ok, %{status_code: status, body: body}}) do
+        Logger.error("Error #{status} returned")
         {:error, :jsx.decode(body)}
     end
 end

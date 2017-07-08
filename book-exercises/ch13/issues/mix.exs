@@ -3,6 +3,8 @@ defmodule Issues.Mixfile do
 
   def project do
     [app: :issues,
+     name: "Issues",
+     source_url: "https://github.com/lwalter/elixir-exercises/book-exercises/ch13/issues",
      version: "0.1.0",
      elixir: "~> 1.4",
      escript: escript_config(),
@@ -31,7 +33,8 @@ defmodule Issues.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 0.12"},
-      {:jsx, "~> 2.8"}
+      {:jsx, "~> 2.8"},
+      {:ex_doc, github: "elixir-lang/ex_doc"}
     ]
   end
 

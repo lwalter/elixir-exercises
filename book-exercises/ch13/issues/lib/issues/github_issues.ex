@@ -4,6 +4,10 @@ defmodule Issues.GithubIssues do
     @user_agent [{"User-agent", "Issue parser"}]
     @github_url Application.get_env(:issues, :github_url)
 
+    @moduledoc """
+    Handles fetching and decoding GitHub issues for a given project.
+    """
+
     @doc """
     Given a string for a GitHub user and a string for a GitHub project
     the issues for that project are fetched and the response is decoded.

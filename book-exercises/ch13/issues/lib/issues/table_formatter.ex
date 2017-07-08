@@ -1,4 +1,7 @@
 defmodule Issues.TableFormatter do
+    @moduledoc """
+    Formatting and printing functions for GitHub issue input data.
+    """
 
     @doc """
     Takes a list of row data, where each row is a Map, and a list of headers.

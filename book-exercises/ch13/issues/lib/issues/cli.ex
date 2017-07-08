@@ -69,27 +69,13 @@ defmodule Issues.CLI do
         Enum.sort(list_of_issues, &(&1["created_at"] <= &2["created_at"]))
     end
 
-    # def print_table(issues) do
-    #     IO.puts " # | created_at | title "
-    #     IO.puts "---+------------+-------"
-    #     display_in_table(issues)
-    # end
-
-    # def display_in_table([head|tail]) do
-    #     IO.puts "#{head["number"]} | #{head["created_at"]} | #{head["title"]}"
-    #     display_in_table(tail)
-    # end
-
-    # def display_in_table([]) do
-    #     []
-    # end
-
-
     def print_table_for_columns(issues, headers) do
-        # put data into lists of their columns [[1, 2, 3], ["title1", "title2", "title3"], ...]
         data_by_columns = data_by_columns(issues, headers)
         widths = widths_of(data_by_columns)
-        widths
+        row_format = format_for(widths)
+        puts_one_line_columns(headers, row_format)
+        IO.puts(separator(widths))
+        puts_in_columns(data_by_columns, row_format)
     end
 
     def data_by_columns(rows, headers) do
@@ -114,5 +100,24 @@ defmodule Issues.CLI do
             |> Enum.map(&String.length/1)
             |> Enum.max
         end
+    end
+
+    def format_for(column_widths) do
+        Enum.map_join(column_widths, " | ", &("~-#{&1}s")) <> "~n"
+    end
+
+    def separator(column_widths) do
+        Enum.map_join(column_widths, "-+-", &(List.duplicate("-", &1)))
+    end
+
+    def puts_in_columns(data_by_columns, format) do
+        data_by_columns
+        |> List.zip
+        |> Enum.map(&Tuple.to_list/1)
+        |> Enum.each(&puts_one_line_columns(&1, format))
+    end
+
+    def puts_one_line_columns(fields, format) do
+        :io.format(format, fields)
     end
 end

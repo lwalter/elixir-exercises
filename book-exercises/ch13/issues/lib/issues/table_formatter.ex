@@ -53,7 +53,7 @@ defmodule Issues.TableFormatter do
     end
 
     @doc """
-    Given a list containing sublists, where each sublist contains the data 
+    Given a list containing sublists, where each sublist contains the data
     for a column, return a list containing the maximum width of each column.
 
     ## Example
@@ -98,7 +98,7 @@ defmodule Issues.TableFormatter do
 
     @doc """
     Given a list containing rows of data, a list containing header
-    selectors, and a format string, wite the extracted data under 
+    selectors, and a format string, wite the extracted data under
     control of the format string.
     """
     def puts_in_columns(data_by_columns, format) do

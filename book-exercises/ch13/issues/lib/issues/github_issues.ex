@@ -22,7 +22,7 @@ defmodule Issues.GithubIssues do
     defp issues_url(user, project) do
         "#{@github_url}/repos/#{user}/#{project}/issues"
     end
-    
+
     defp handle_response({:ok, %{status_code: 200, body: body}}) do
         Logger.info("Successful response")
         Logger.debug(fn -> inspect(body) end)

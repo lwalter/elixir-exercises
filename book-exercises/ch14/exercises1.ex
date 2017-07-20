@@ -6,7 +6,7 @@ defmodule UniqueToken do
                 repeater()
         end
     end
-    
+
     def run() do
         pid1 = spawn(UniqueToken, :repeater, [])
         pid2 = spawn(UniqueToken, :repeater, [])

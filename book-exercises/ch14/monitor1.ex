@@ -9,13 +9,13 @@ defmodule Monitor1 do
     def run() do
         res = spawn_monitor(Monitor1, :sad_method, [])
         IO.inspect(res)
-        
+
         receive do
             msg ->
                 IO.puts("MESSAGE RECEIVED: #{inspect(msg)}")
         after 1000 ->
             IO.puts("Nothing happened after 1 second")
         end
-    
+
     end
 end

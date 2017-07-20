@@ -15,7 +15,7 @@ defmodule MultipleProcs4 do
             IO.puts("All messagess received")
         end
     end
-    
+
     def run() do
         spawn_monitor(MultipleProcs4, :sender, [self()])
         sleep(500)

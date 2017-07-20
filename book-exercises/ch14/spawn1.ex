@@ -12,7 +12,7 @@ pid = spawn(Spawn1, :greet, [])
 send(pid, {self(), "World!"})
 
 receive do
-    {:ok, msg} -> 
+    {:ok, msg} ->
         IO.puts(msg)
 end
 

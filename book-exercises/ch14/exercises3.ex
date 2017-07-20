@@ -15,7 +15,7 @@ defmodule MultipleProcs3 do
             IO.puts("All messagess received")
         end
     end
-    
+
     def run() do
         spawn_link(MultipleProcs3, :sender, [self()])
         sleep(500)

@@ -24,3 +24,5 @@
 
 ## Naming a process
 * A PID consists of three numbers, ```<node ID>.<low process ID bit>.<high process ID bit>```
+* An application can specify in the *mix.exs* file the list of names that its processes can be named
+* It's standard to register process names when an application starts
